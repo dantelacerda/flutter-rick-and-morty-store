@@ -61,11 +61,34 @@ class _ProductPageState extends State<ProductPage> {
             children: <Widget>[
               Text(
                 param['name'],
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               )
             ],
           ),
         ),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.only(right: 10),
+                child: Text(
+                  "${price.toString()} USD",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
       ],
     );
   }

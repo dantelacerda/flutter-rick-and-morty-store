@@ -116,7 +116,7 @@ _rowBalance(repository) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              "Current Balance: ${repository['balance'].toString()}",
+              "Current Schmeckles: ${repository['balance'].toString()}",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(color: Colors.black, fontSize: 20),

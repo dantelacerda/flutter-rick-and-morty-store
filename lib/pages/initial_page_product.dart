@@ -36,7 +36,7 @@ class _InitialPageProductState extends State<InitialPageProduct>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My Account!"),
+        title: Text("Intergalatic Store!"),
         bottom: TabBar(controller: tabController, tabs: [
           Tab(text: "My Wallet", icon: Icon(Icons.info)),
           Tab(text: "Offers", icon: Icon(Icons.local_offer)),
