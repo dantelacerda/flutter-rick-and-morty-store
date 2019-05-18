@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
-import 'package:rick_morty_store/pages/login_page_product.dart';
+import 'package:rick_morty_store/pages/initial_page_product.dart';
 
 void main() => runApp(MyApp());
 
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primaryColor: Colors.blue
         ),
-        home: LoginPageProduct(),
+        home: InitialPageProduct(),
 //        home: LoginPage(),
       ),
     );

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:rick_morty_store/pages/drawer_list_lateral.dart';
 import 'package:rick_morty_store/services/offers_service.dart';
 import 'package:rick_morty_store/services/wallet_service.dart';
 import 'package:rick_morty_store/utils/prefs.dart';
 
-class LoginPageProduct extends StatefulWidget {
+class InitialPageProduct extends StatefulWidget {
   @override
-  _LoginPageProductState createState() => _LoginPageProductState();
+  _InitialPageProductState createState() => _InitialPageProductState();
 }
 
-class _LoginPageProductState extends State<LoginPageProduct>
-    with SingleTickerProviderStateMixin<LoginPageProduct> {
+class _InitialPageProductState extends State<InitialPageProduct>
+    with SingleTickerProviderStateMixin<InitialPageProduct> {
   TabController tabController;
 
   @override
@@ -46,6 +47,8 @@ class _LoginPageProductState extends State<LoginPageProduct>
         _bodyWallet(context),
         _bodyOffers(context),
       ]),
+
+        drawer: DrawerListLateral()
 
     );
   }

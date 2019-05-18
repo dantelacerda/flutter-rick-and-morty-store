@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rick_morty_store/pages/product_page.dart';
+import 'package:rick_morty_store/utils/alerts.dart';
 import 'package:rick_morty_store/utils/nav.dart';
 
 class OffersView extends StatefulWidget {
@@ -67,7 +68,7 @@ offers_view() {
           itemBuilder: (context, index) {
             final repository = repositories[index];
 
-            return _cardOffers(repository, context);
+            return _cardOffers(repository, currentBalance, context);
           });
     },
   );
@@ -75,12 +76,12 @@ offers_view() {
   return r;
 }
 
-Card _cardOffers(repository, BuildContext context) {
+Card _cardOffers(repository, currentBalance, BuildContext context) {
   return Card(
             child: InkWell(
               onTap: () {
-                _onClickBuy(context,
-                    repository['product']);
+                _onClickDetails(context,
+                    repository['product'], currentBalance, repository['price']);
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 12, top: 5),
@@ -90,7 +91,7 @@ Card _cardOffers(repository, BuildContext context) {
                     Center(
                         child: Image.network(repository['product']['image'])),
 
-                    _rowNameAndPrice(repository),
+                    _rowNameAndPrice(repository, currentBalance),
 
 //                    _columnDescription(repository['product']),
                     //BOTOES EM BAIXO DOS PRODUTOS
@@ -100,8 +101,8 @@ Card _cardOffers(repository, BuildContext context) {
                           FlatButton(
                             child: const Text('DETAILS'),
                             onPressed: () {
-                              _onClickBuy(context,
-                                  repository['product']);
+                              _onClickDetails(context,
+                                  repository['product'], currentBalance, repository['price']);
                             },
                           ),
                         ],
@@ -116,7 +117,7 @@ Card _cardOffers(repository, BuildContext context) {
           );
 }
 
-Row _rowNameAndPrice(repository) {
+Row _rowNameAndPrice(repository, currentBalance) {
   return Row(
     children: <Widget>[
       Expanded(
@@ -143,7 +144,12 @@ Row _rowNameAndPrice(repository) {
                 "${repository['price'].toString()} USD",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(color: Colors.black, fontSize: 15, fontStyle: FontStyle.italic),
+                style: TextStyle(
+                    color: currentBalance < repository['price'] ? Colors.red : Colors.black,
+                    fontSize: 15,
+                    fontStyle: FontStyle.italic,
+                    fontWeight: currentBalance < repository['price'] ? FontWeight.bold : FontWeight.normal,
+                ),
               ),
             ),
           ],
@@ -153,6 +159,11 @@ Row _rowNameAndPrice(repository) {
   );
 }
 
-void _onClickBuy(BuildContext context, product) {
-  push(context, ProductPage(param: product));
+void _onClickDetails(BuildContext context, product, currentBalance, price) {
+  if(currentBalance < price) {
+    alert(context, "You're poor, Jerry.", "You don't have enough Schmeckles to buy that.");
+  } else {
+    push(context, ProductPage(param: product, currentBalance: currentBalance, price: price));
+  }
+
 }
