@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:rick_morty_store/pages/product_page.dart';
-import 'package:rick_morty_store/utils/alerts.dart';
 import 'package:rick_morty_store/utils/nav.dart';
 
 class OffersView extends StatefulWidget {
@@ -47,7 +46,6 @@ offers_view() {
       },
       pollInterval: 10,
     ),
-    // Just like in apollo refetch() could be used to manually trigger a refetch
     builder: (QueryResult result, {VoidCallback refetch}) {
       if (result.errors != null) {
         return Text(result.errors.toString());
@@ -60,8 +58,6 @@ offers_view() {
 
 
       var currentBalance = result.data['viewer']['balance'];
-      print(currentBalance);
-      print(repositories);
 
       return ListView.builder(
           itemCount: repositories.length,
@@ -81,7 +77,7 @@ Card _cardOffers(repository, currentBalance, BuildContext context) {
             child: InkWell(
               onTap: () {
                 _onClickDetails(context,
-                    repository['product'], currentBalance, repository['price']);
+                    repository['product'], currentBalance, repository['price'], repository['id']);
               },
               child: Padding(
                 padding: const EdgeInsets.only(left: 12, top: 5),
@@ -93,7 +89,6 @@ Card _cardOffers(repository, currentBalance, BuildContext context) {
 
                     _rowNameAndPrice(repository, currentBalance),
 
-//                    _columnDescription(repository['product']),
                     //BOTOES EM BAIXO DOS PRODUTOS
                     ButtonTheme.bar(
                       child: ButtonBar(
@@ -102,7 +97,7 @@ Card _cardOffers(repository, currentBalance, BuildContext context) {
                             child: const Text('DETAILS'),
                             onPressed: () {
                               _onClickDetails(context,
-                                  repository['product'], currentBalance, repository['price']);
+                                  repository['product'], currentBalance, repository['price'], repository['id']);
                             },
                           ),
                         ],
@@ -159,11 +154,8 @@ Row _rowNameAndPrice(repository, currentBalance) {
   );
 }
 
-void _onClickDetails(BuildContext context, product, currentBalance, price) {
-  if(currentBalance < price) {
-    alert(context, "You're poor, Jerry.", "You don't have enough Schmeckles to buy that.");
-  } else {
-    push(context, ProductPage(param: product, currentBalance: currentBalance, price: price));
-  }
-
+void _onClickDetails(BuildContext context, product, currentBalance, price, offerId) {
+  push(context, ProductPage(param: product, currentBalance: currentBalance, price: price, offerId: offerId));
 }
+
+
